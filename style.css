@@ -1,0 +1,230 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0e1a2b, #1f2630);
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    overflow-y: auto; /* Разрешаем вертикальную прокрутку */
+    min-height: 100vh; /* Устанавливаем минимальную высоту для body */
+    display: flex;
+    flex-direction: column; /* Изменяем направление на колонку */
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: linear-gradient(145deg, #2b3c4c, #1e2a36);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 25px #00ccff;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.container:hover {
+    transform: scale(1.02);
+}
+
+h1, h2 {
+    color: #00ccff;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #444;
+    border-radius: 10px;
+    background: #2a2e36;
+    color: #ffffff;
+    transition: box-shadow 0.3s;
+    font-size: 16px;
+}
+
+input:focus {
+    box-shadow: 0 0 10px #00ccff;
+    outline: none;
+}
+
+button {
+    padding: 12px;
+    margin-top: 10px;
+    background: linear-gradient(145deg, #007acc, #005ea6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: #005ea6;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+}
+
+#output {
+    margin-top: 20px;
+    background: #2b3c4c;
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 10px;
+    color: #d0d0d0;
+    box-shadow: inset 0 0 8px #00ccff;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#graph {
+    width: 100%;
+    height: 400px;
+    background: url('https://images.unsplash.com/photo-1497051933680-2c9c1d146d5f') center/cover, #262730;
+    border: 1px solid #444;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+#graph:hover {
+    box-shadow: 0 0 20px rgba(0, 204, 255, 0.8);
+    transform: scale(1.02);
+}
+
+footer {
+    margin-top: 100px; /* Установка отступа сверху */
+    text-align: center; /* Выравнивание по центру */
+    padding: 15px;
+    background: #1f2630;
+    border-top: 1px solid #444;
+    color: #e0e0e0;
+    font-size: 14px;
+}
+/* Стили для кастомного алерта */
+.custom-alert {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #2b3c4c, #1e2a36);
+    color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 3px solid;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1000;
+    animation: slideDown 0.5s ease forwards;
+}
+
+/* Анимация появления сверху */
+@keyframes slideDown {
+    from {
+        top: -50px;
+        opacity: 0;
+    }
+    to {
+        top: 10px;
+        opacity: 1;
+    }
+}
+
+/* Переливающаяся рамка */
+.custom-alert {
+    border-image-source: linear-gradient(135deg, red, transparent);
+    border-image-slice: 1;
+}
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Темный фон */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #2b3c4c, #1e2a36); /* Темный фон с градиентом */
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    border: 3px solid; /* Градиентная рамка */
+    border-image-source: linear-gradient(135deg, #ff4c4c, #00ccff);
+    border-image-slice: 1;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 20px rgba(0, 204, 255, 0.5);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.modal-content h2 {
+    color: #00ccff;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
+}
+
+.modal-content input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #444;
+    border-radius: 10px;
+    background: #2a2e36;
+    color: #ffffff;
+    font-size: 16px;
+    box-shadow: 0 0 10px #00ccff;
+    outline: none;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #007acc, #005ea6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.modal-content button:hover {
+    background-color: #005ea6;
+    transform: scale(1.05);
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover, .close:focus {
+    color: #ffffff;
+}

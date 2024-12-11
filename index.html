@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск циклов в графе</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Поиск циклов в графе</h1>
+        <div id="input-section">
+            <h2>Введите количество вершин</h2>
+            <input type="number" id="vertex-count" placeholder="Количество вершин" min="1">
+            <button onclick="createVertexInputs()">Далее</button>
+        </div>
+        <div id="vertices-input" style="display: none;"></div>
+        <div id="edges-input" style="display: none;"></div>
+        <button id="find-cycles" style="display: none;" onclick="findCycles()">Найти циклы</button>
+        <div id="output" style="display: none;"></div>
+        <div id="graph" style="display: block;"></div>
+    </div>
+    <div id="custom-alert" class="custom-alert" style="display: none;">
+        <p id="alert-message"></p>
+    </div>
+        
+    <footer>
+        <p>© 2024 Курсовая работа по методам программирования
+          <br> Выполнил студент группы КА-23-05 Гимпель Евгений Анатольевич</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
