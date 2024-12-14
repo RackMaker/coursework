@@ -3,20 +3,13 @@ let edges = [];
 
 function createVertexInputs() {
     const vertexCountInput = document.getElementById('vertex-count');
-
-    // Проверка, чтобы вводились только цифры
     vertexCountInput.addEventListener('input', function() {
         const value = vertexCountInput.value;
-        // Удаляем все нецифровые символы
         vertexCountInput.value = value.replace(/[^\d]/g, '');
-        
-        // Если введенное значение пустое или недопустимо, показываем уведомление
         if (vertexCountInput.value !== '' && !/^[1-9]\d*$/.test(vertexCountInput.value)) {
             showAlert('Пожалуйста, введите корректное количество вершин (целое положительное число без знаков препинания).');
         }
     });
-
-    // Проверка, чтобы кнопка "Далее" работала только при корректном вводе
     const count = vertexCountInput.value;
     const verticesInputDiv = document.getElementById('vertices-input');
     verticesInputDiv.innerHTML = '';
@@ -28,33 +21,30 @@ function createVertexInputs() {
         verticesInputDiv.style.display = 'block';
     }
 }
-
 function getVertices() {
     const count = document.getElementById('vertex-count').value;
     vertices = [];
-    const verticesSet = new Set(); // Множество для проверки уникальности
-    let validInput = true; // Флаг для проверки валидности ввода
+    const verticesSet = new Set(); 
+    let validInput = true; 
 
     for (let i = 0; i < count; i++) {
         const vertex = document.getElementById(`vertex-${i}`).value.trim();
         
-        // Проверяем, чтобы введенные вершины были уникальными и без специальных символов
-        if (!/^[\w\d]+$/.test(vertex)) { // Разрешаем буквы, цифры и символы подчеркивания
+        if (!/^[\w\d]+$/.test(vertex)) { 
             showAlert(`Имя вершины "${vertex}" содержит недопустимые символы. Введите только буквы, цифры и символы подчеркивания.`);
-            validInput = false; // Установка флага недопустимого ввода
+            validInput = false; 
         } else if (vertex === "") {
             showAlert('Имя вершины не может быть пустым.');
-            validInput = false; // Установка флага недопустимого ввода
+            validInput = false;
         } else if (verticesSet.has(vertex)) {
             showAlert(`Вершина "${vertex}" уже существует. Введите уникальное имя.`);
-            validInput = false; // Установка флага недопустимого ввода
+            validInput = false; 
         } else {
             vertices.push(vertex);
             verticesSet.add(vertex);
         }
     }
 
-    // Переход к следующему шагу только если все условия выполнены
     if (validInput) {
         createEdgeInputs();
     }
@@ -65,18 +55,16 @@ function createEdgeInputs() {
     edgesInputDiv.innerHTML = '';
     const edgeCount = prompt('Введите количество рёбер:');
 
-    // Проверка на корректность количества рёбер
     if (!/^[1-9]\d*$/.test(edgeCount)) {
         showAlert('Пожалуйста, введите корректное количество рёбер (целое положительное число).');
         return;
     }
 
-    // Стили для контейнера
     edgesInputDiv.style.display = 'grid';
     edgesInputDiv.style.gridTemplateColumns = '1fr 1fr';
     edgesInputDiv.style.gap = '20px';
     edgesInputDiv.style.padding = '20px';
-    edgesInputDiv.style.marginTop = '20px'; // Отступ сверху для контейнера
+    edgesInputDiv.style.marginTop = '20px'; 
     edgesInputDiv.style.border = '1px solid #ccc';
     edgesInputDiv.style.borderRadius = '5px';
 
@@ -107,7 +95,7 @@ function getEdges() {
         const to = document.getElementById(`to-${i}`).value;
         edges.push([from, to]);
     }
-    visualizeGraph(); // Визуализируем граф после получения рёбер
+    visualizeGraph(); 
 }
 
 function visualizeGraph() {
@@ -118,22 +106,18 @@ function visualizeGraph() {
     const width = 600;
     const height = 400;
 
-    // Очищаем контейнер для графа
     const svg = d3.select("#graph").html("").append("svg")
         .attr("width", width)
         .attr("height", height);
 
-    // Создаем данные для узлов и рёбер
     const nodes = vertices.map(vertex => ({ id: vertex }));
     const links = edges.map(([source, target]) => ({ source, target }));
 
-    // Определяем симуляцию
     const simulation = d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id).distance(100))
         .force("charge", d3.forceManyBody().strength(-300))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
-    // Создаем линии для рёбер
     const link = svg.selectAll(".link")
         .data(links)
         .enter().append("line")
@@ -141,7 +125,6 @@ function visualizeGraph() {
         .style("stroke", "#999")
         .style("stroke-width", 2);
 
-    // Создаем узлы
     const node = svg.selectAll(".node")
         .data(nodes)
         .enter().append("g")
@@ -151,19 +134,16 @@ function visualizeGraph() {
             .on("drag", dragged)
             .on("end", dragended));
 
-    // Добавляем круги к узлам
     node.append("circle")
         .attr("r", 10)
         .style("fill", "#69b3a2");
 
-    // Добавляем текст к узлам
     node.append("text")
         .attr("dy", ".35em")
         .attr("text-anchor", "middle")
         .text(d => d.id)
         .style("fill", "#ffffff");
 
-    // Функция обновления координат рёбер и узлов
     simulation.on("tick", () => {
         link
             .attr("x1", d => d.source.x)
@@ -196,7 +176,6 @@ function findCycles() {
     const outputDiv = document.getElementById('output');
     outputDiv.innerHTML = '<h2>Найденные циклы</h2>';
     
-    // Проверяем, есть ли хотя бы три уникальные вершины в рёбрах
     const uniqueVertices = new Set(edges.flat());
     if (uniqueVertices.size < 3) {
         outputDiv.innerHTML += '<p>Циклы не могут быть найдены. Требуется минимум три уникальные вершины.</p>';
@@ -234,8 +213,7 @@ function detectCycles(vertices, edges) {
                 const cycleStartIndex = path.indexOf(neighbor);
                 const cycle = path.slice(cycleStartIndex);
 
-                // Нормализуем цикл (сортируем его) и добавляем в Set
-                if (cycle.length >= 3) { // Проверяем, что цикл содержит хотя бы 3 вершины
+                if (cycle.length >= 3) {
                     const sortedCycle = [...cycle].sort();
                     uniqueCycles.add(sortedCycle.join(' -> '));
                 }
@@ -269,7 +247,6 @@ function dragended(event, d) {
     d3.select(this).classed("active", false);
 }
 
-// Функция для показа кастомного алерта
 function showAlert(message) {
     const alertBox = document.getElementById('custom-alert');
     const alertMessage = document.getElementById('alert-message');
@@ -277,15 +254,12 @@ function showAlert(message) {
     alertMessage.innerText = message;
     alertBox.style.display = 'block';
 
-    // Автоматически скрываем алерт через 3 секунды
     setTimeout(() => {
         alertBox.style.display = 'none';
     }, 3000);
 }
 
-// Функция для показа окна ввода количества рёбер
 function showEdgeModal() {
-    // Создаем затемненный фон модального окна
     const modalOverlay = document.createElement('div');
     modalOverlay.style.display = 'flex';
     modalOverlay.style.position = 'fixed';
@@ -298,7 +272,6 @@ function showEdgeModal() {
     modalOverlay.style.justifyContent = 'center';
     modalOverlay.style.alignItems = 'center';
 
-    // Создаем само модальное окно с нужными стилями
     const modalContent = document.createElement('div');
     modalContent.style.background = 'linear-gradient(145deg, #2b3c4c, #1e2a36)';
     modalContent.style.color = '#ffffff';
@@ -313,7 +286,6 @@ function showEdgeModal() {
     modalContent.style.textAlign = 'center';
     modalContent.style.fontFamily = 'Arial, sans-serif';
 
-    // Добавляем содержимое модального окна
     modalContent.innerHTML = `
         <span style="color: #aaaaaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;" onclick="closeEdgeModal()">&times;</span>
         <h2 style="color: #00ccff; font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 10px rgba(0, 204, 255, 0.7);">Введите количество рёбер</h2>
@@ -321,12 +293,10 @@ function showEdgeModal() {
         <button onclick="saveEdgeCount()" style="padding: 10px 20px; background: linear-gradient(135deg, #007acc, #005ea6); border: none; color: white; cursor: pointer; border-radius: 10px; font-weight: bold; font-size: 16px; transition: background-color 0.3s, transform 0.3s;">Сохранить</button>
     `;
 
-    // Добавляем модальное окно в затемненный фон
     modalOverlay.appendChild(modalContent);
     document.body.appendChild(modalOverlay);
 }
 
-// Функция для закрытия модального окна
 function closeEdgeModal() {
     const modal = document.querySelector('.modal');
     if (modal) {
@@ -334,18 +304,15 @@ function closeEdgeModal() {
     }
 }
 
-// Сохранение количества рёбер
 function saveEdgeCount() {
     const edgeCountInput = document.getElementById('edge-count');
     const edgeCount = edgeCountInput.value;
 
-    // Проверка корректности ввода
     if (!/^[1-9]\d*$/.test(edgeCount)) {
         showAlert('Пожалуйста, введите корректное количество рёбер (целое положительное число).');
     } else {
         closeEdgeModal();
 
-        // Логика для обработки количества рёбер
         createEdgeInputs(edgeCount);
     }
     
