@@ -4,10 +4,10 @@ body {
     color: #ffffff;
     margin: 0;
     padding: 20px;
-    overflow-y: auto; /* Разрешаем вертикальную прокрутку */
-    min-height: 100vh; /* Устанавливаем минимальную высоту для body */
+    overflow-y: auto; 
+    min-height: 100vh; 
     display: flex;
-    flex-direction: column; /* Изменяем направление на колонку */
+    flex-direction: column; 
 }
 
 .container {
@@ -108,15 +108,15 @@ button:hover {
 }
 
 footer {
-    margin-top: 100px; /* Установка отступа сверху */
-    text-align: center; /* Выравнивание по центру */
+    margin-top: 100px; 
+    text-align: center; 
     padding: 15px;
     background: #1f2630;
     border-top: 1px solid #444;
     color: #e0e0e0;
     font-size: 14px;
 }
-/* Стили для кастомного алерта */
+
 .custom-alert {
     position: fixed;
     top: 10px;
@@ -135,7 +135,6 @@ footer {
     animation: slideDown 0.5s ease forwards;
 }
 
-/* Анимация появления сверху */
 @keyframes slideDown {
     from {
         top: -50px;
@@ -147,7 +146,6 @@ footer {
     }
 }
 
-/* Переливающаяся рамка */
 .custom-alert {
     border-image-source: linear-gradient(135deg, red, transparent);
     border-image-slice: 1;
@@ -160,13 +158,13 @@ footer {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Темный фон */
+    background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
 }
 
 .modal-content {
-    background: linear-gradient(145deg, #2b3c4c, #1e2a36); /* Темный фон с градиентом */
+    background: linear-gradient(145deg, #2b3c4c, #1e2a36); 
     color: #ffffff;
     padding: 20px;
     border-radius: 15px;
